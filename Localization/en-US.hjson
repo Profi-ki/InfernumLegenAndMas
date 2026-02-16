@@ -1,0 +1,29 @@
+Mods: {
+	InfernumMLMode: {
+		DifficultyUI: {
+			Name: Infernum + master difficulty
+			ShortDescription: "[c/B32E81:A distinct challenge for those who seek something vastly different yet also more demanding than Death mode.]"
+			ExpandedDescription:
+				'''
+				 [c/B32E81:Many major foes will be different, having more challenging AI.]
+				 [c/B32E81:Adrenaline takes considerably longer to charge.]
+				 [c/FF0055:Adaptability is imperative.]
+				'''
+			InfernumText: Good luck.
+			InfernumText2: Very well, then.
+		}
+
+		DifficultyUI1: {
+			Name: Infernum + legendary difficulty
+			ShortDescription: "[c/B32E81:A distinct challenge for those who seek something vastly different yet also more demanding than Death mode.]"
+			ExpandedDescription:
+				'''
+				 [c/B32E81:Many major foes will be different, having more challenging AI.]
+				 [c/B32E81:Adrenaline takes considerably longer to charge.]
+				 [c/FF0055:Adaptability is imperative.]
+				'''
+			InfernumText: Good luck.
+			InfernumText2: Very well, then.
+		}
+	}
+}

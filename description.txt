@@ -1,0 +1,1 @@
+This mod allows you to run the Calamity Infernum modification on Master difficulty or with the For The Worthy and Get Fixed Boi seeds on the new version.
