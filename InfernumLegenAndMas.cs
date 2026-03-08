@@ -1,36 +1,19 @@
-global using Luminance.Common.Utilities;
-global using static System.MathF;
-global using static Microsoft.Xna.Framework.MathHelper;
-global using LumUtils = Luminance.Common.Utilities.Utilities;
-using System;
-using System.Reflection;
-using Terraria;
-using Terraria.ModLoader;
-using System.IO;
-using CalamityMod.ILEditing;
-using CalamityMod.NPCs;
-using CalamityMod.Systems;
-using InfernumMode.Assets.BossTextures;
-using InfernumMode.Assets.Effects;
-using InfernumMode.Common.Graphics.Primitives;
-using InfernumMode.Content.BossBars;
-using InfernumMode.Content.UI;
-using InfernumMode.Content.WorldGeneration;
-using InfernumMode.Core.Balancing;
-using InfernumMode.Core.GlobalInstances.Systems;
-using InfernumMode.Core.Netcode;
-using InfernumMode.Core.OverridingSystem;
-using Luminance.Core.ModCalls;
-using Terraria.ID;
 using System.Collections.Generic;
+using CalamityMod.Systems;
 using CalamityMod.World;
 using InfernumMode.Assets.Sounds;
+using InfernumMode.Core.GlobalInstances.Systems;
+using InfernumMode.Core.Netcode;
 using InfernumMode.Core.Netcode.Packets;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using Terraria;
 using Terraria.Audio;
+using Terraria.ID;
 using Terraria.Localization;
+using Terraria.ModLoader;
+using InfernumMode.Content.UI;
 using static CalamityMod.Systems.DifficultyModeSystem;
 
 namespace InfernumLegenAndMas
@@ -47,26 +30,19 @@ namespace InfernumLegenAndMas
                     WorldSaveSystem.InfernumModeEnabled = value;
                     if (value)
                     {
-                        if (Main.getGoodWorld)
+                        CalamityWorld.death = value;
+                        if (!Main.GameModeInfo.IsJourneyMode)
                         {
-                            if (!Main.GameModeInfo.IsJourneyMode)
-                            {
-                                Main.GameMode = value == true ? GameModeID.Expert : GameModeID.Normal;
-                            }
-                            else
-                            {
-                                DifficultyModeSystem.AlignJourneyDifficultySlider();
-                            }
-                            CalamityWorld.death = value;
+                            Main.GameMode = BackBoneGameModeID;
                         }
                         else
                         {
-                            CalamityWorld.death = value;
-                            if (value && !Main.GameModeInfo.IsJourneyMode)
-                                Main.GameMode = BackBoneGameModeID;
-
+                            AlignJourneyDifficultySlider();
                         }
                     }
+                    if (Main.netMode != NetmodeID.SinglePlayer)
+                        PacketManager.SendPacket<InfernumModeActivityPacket>();
+
                 }
             }
 
@@ -77,9 +53,10 @@ namespace InfernumLegenAndMas
 
             public override SoundStyle ActivationSound => InfernumSoundRegistry.ModeToggleLaugh;
 
-            public override int BackBoneGameModeID => Main.getGoodWorld ? GameModeID.Expert : GameModeID.Master;
+            public override int BackBoneGameModeID => GameModeID.Master;
 
-            public override float DifficultyScale => 0.1f;
+
+            public override float DifficultyScale => 0.5f;
 
             public override LocalizedText Name => Language.GetText("Mods.InfernumMLMode.DifficultyUI.Name");
 
@@ -92,85 +69,33 @@ namespace InfernumLegenAndMas
 
             public override int[] FavoredDifficultyAtTier(int tier)
             {
-                DifficultyMode[] tierList = DifficultyModeSystem.DifficultyTiers[tier];
+                DifficultyMode[] tierList = DifficultyTiers[tier];
+
                 List<int> difficulties = new List<int>();
 
                 for (int i = 0; i < tierList.Length; i++)
                 {
-                    if (tierList[i] is MasterDifficulty || tierList[i] is DeathDifficulty)
+                    if (tierList[i] is InfernumDifficulty && !Main.getGoodWorld)
+                        difficulties.Add(i);
+                    if (Main.getGoodWorld && (tierList[i] is InfernumDifficulty || tierList[i] is DeathDifficulty))
                         difficulties.Add(i);
                 }
 
                 if (difficulties.Count <= 0)
                     difficulties.Add(0);
 
-
                 return difficulties.ToArray();
             }
-        }
-        public class InfernumLegendaryDifficulty : DifficultyMode
-        {
-            public override bool Enabled
+            public override bool IsBasedOn(DifficultyMode mode)
             {
-                get => WorldSaveSystem.InfernumModeEnabled && Main.getGoodWorld ? CalamityWorld.death && CalamityWorld.LegendaryMode : false;
-                set
+                if (!Main.getGoodWorld)
                 {
-                    WorldSaveSystem.InfernumModeEnabled = value;
-                    if (value)
-                    {
-                        if (Main.getGoodWorld)
-                        {
-                            if (!Main.GameModeInfo.IsJourneyMode)
-                            {
-                                Main.GameMode = value == true ? GameModeID.Master : GameModeID.Expert;
-                            }
-                            else
-                            {
-                                DifficultyModeSystem.AlignJourneyDifficultySlider();
-                            }
-                            CalamityWorld.revenge = value;
-                            CalamityWorld.death = value;
-                        }
-                    }
+                    return mode is DeathDifficulty;
                 }
-            }
-
-            public override Asset<Texture2D> Texture => _texture ??= ModContent.Request<Texture2D>("InfernumLegenAndMas/UI/InfernumLegIcon");
-            public override Asset<Texture2D> OutlineTexture => _outlineTexture ??= ModContent.Request<Texture2D>("InfernumLegenAndMas/UI/InfernumLegIcon_Outline");
-
-            public override Asset<Texture2D> TextureDisabled => _textureDisabled ??= ModContent.Request<Texture2D>("InfernumLegenAndMas/UI/InfernumLegIcon_Off");
-
-            public override SoundStyle ActivationSound => InfernumSoundRegistry.ModeToggleLaugh;
-
-            public override int BackBoneGameModeID => GameModeID.Master;
-
-            public override float DifficultyScale => 0.1f;
-
-            public override LocalizedText Name => Language.GetText("Mods.InfernumMLMode.DifficultyUI1.Name");
-
-            public override Color ChatTextColor => Color.DarkRed;
-
-            public override LocalizedText ShortDescription => Language.GetText("Mods.InfernumMLMode.DifficultyUI1.ShortDescription");
-
-            public override LocalizedText ExpandedDescription => Language.GetText("Mods.InfernumMLMode.DifficultyUI1.ExpandedDescription");
-            public override FTWDisplayMode GetForTheWorthyDisplay => FTWDisplayMode.OnlyForTheWorthy;
-
-            public override int[] FavoredDifficultyAtTier(int tier)
-            {
-                DifficultyMode[] tierList = DifficultyModeSystem.DifficultyTiers[tier];
-                List<int> difficulties = new List<int>();
-
-                for (int i = 0; i < tierList.Length; i++)
+                else
                 {
-                    if (tierList[i] is LegendaryDifficulty || tierList[i] is MaliceDifficulty)
-                        difficulties.Add(i);
+                    return mode is MaliceDifficulty;
                 }
-
-                if (difficulties.Count <= 0)
-                    difficulties.Add(0);
-
-
-                return difficulties.ToArray();
             }
         }
         public override void Load()
@@ -178,8 +103,6 @@ namespace InfernumLegenAndMas
             InfernumMode.Core.GlobalInstances.Systems.DifficultyManagementSystem.DisableDifficultyModes = false;
             InfernumMasterDifficulty difficulty = new();
             DifficultyModeSystem.Difficulties.Add(difficulty);
-            InfernumLegendaryDifficulty difficulty1 = new();
-            DifficultyModeSystem.Difficulties.Add(difficulty1);
             DifficultyModeSystem.CalculateDifficultyData();
         }
         public override void Unload()

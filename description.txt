@@ -1,1 +1,2 @@
-This mod allows you to run the Calamity Infernum modification on Master difficulty or with the For The Worthy and Get Fixed Boi seeds on the new version.
+This mod allows you to run the Calamity Infernum modification on Master difficulty or with the For The Worthy seed on the new version.
+Creating a world with the getfixedboi seed is highly discouraged (due to a bug in the Calamity mod itself)!
