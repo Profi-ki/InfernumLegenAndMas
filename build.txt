@@ -1,6 +1,6 @@
 displayName = Infernum Legendary and Master Patch (remastered)
 author = Rield
-version = 1.3
+version = 1.5
 modReferences = InfernumMode
 sortAfter = InfernumMode
 includeSource = true
