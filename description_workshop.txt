@@ -1,4 +1,4 @@
 This mod allows you to run the Calamity Infernum modification on Master difficulty or with the For The Worthy seed on the new version.
 Creating a world with the getfixedboi seed is highly discouraged (due to a bug in the Calamity mod itself)!
-This mod is a remaster of this mod for new version of Calamity: https://steamcommunity.com/sharedfiles/filedetails/?id=2906406399
-Some scripts were copied from the Infernum modification itself : https://steamcommunity.com/sharedfiles/filedetails/?id=3459129920
+GitHub:
+https://github.com/Profi-ki/InfernumLegenAndMas
