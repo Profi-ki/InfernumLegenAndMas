@@ -1,2 +1,3 @@
 This mod allows you to run the Calamity Infernum modification on Master difficulty or with the For The Worthy seed on the new version.
-Creating a world with the getfixedboi seed is highly discouraged (due to a bug in the Calamity mod itself)!
+Creating a world with the getfixedboi seed is highly discouraged (due to a bug in the Infernum mod itself)!
+Support for the Infernal Eclipse of Ragnarok mod is present.

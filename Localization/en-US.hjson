@@ -1,7 +1,7 @@
 Mods: {
 	InfernumMLMode: {
 		DifficultyUI: {
-			Name: Infernum + master difficulty
+			Name: Infernum + master/legendary difficulty
 			ShortDescription: "[c/B32E81:A distinct challenge for those who seek something vastly different yet also more demanding than Death mode.]"
 			ExpandedDescription:
 				'''
@@ -14,13 +14,13 @@ Mods: {
 		}
 
 		DifficultyUI1: {
-			Name: Infernum + legendary difficulty
-			ShortDescription: "[c/B32E81:A distinct challenge for those who seek something vastly different yet also more demanding than Death mode.]"
+			Name: Ragnarok + legendary difficulty
+			ShortDescription: "[c/B32E81:The hardest difficulty. The end of the adventure. Prove your worth.]"
 			ExpandedDescription:
 				'''
 				 [c/B32E81:Many major foes will be different, having more challenging AI.]
 				 [c/B32E81:Adrenaline takes considerably longer to charge.]
-				 [c/FF0055:Adaptability is imperative.]
+				 [c/FF0055:A huge number of bosses from other modifications.]
 				'''
 			InfernumText: Good luck.
 			InfernumText2: Very well, then.

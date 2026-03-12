@@ -1,4 +1,11 @@
 This mod allows you to run the Calamity Infernum modification on Master difficulty or with the For The Worthy seed on the new version.
-Creating a world with the getfixedboi seed is highly discouraged (due to a bug in the Calamity mod itself)!
+Creating a world with the getfixedboi seed is highly discouraged (due to a bug in the Infernum mod itself)!
 GitHub:
 https://github.com/Profi-ki/InfernumLegenAndMas
+Support for the Infernal Eclipse of Ragnarok mod is present.
+How to enable Ragnarok difficulty:
+On normal difficulty:
+Click the difficulty selector and select "Ragnarok" difficulty.
+On the ForTheWorthy seed:
+Go to the "Workshop" tab -> "Manage Mods" -> "Mod Configuration" -> "Infernal Eclipse of Ragnarok" -> "Secret Settings" and disable "There Is No Reason Disable This" and enable "Don't Enable This." Go to the difficulty selector tab and enable "Ragnarok + Legendary difficulty."
+If the "Infernum + master/legendary difficulty" icon isn't showing up with the Infernal Eclipse of Ragnarok mod, that's fine; Ragnarok is basically Infernum on Master difficulty.
